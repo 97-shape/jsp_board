@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.card-text {
+	margin-bottom: 2px;
+}
+
+.card-text i {
+	margin-right: 10px;
+}

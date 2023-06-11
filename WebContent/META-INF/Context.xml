@@ -1,0 +1,13 @@
+<Context>
+	<Resource
+		name="jdbc/MySQLDB"
+		auth="Container"
+		type="javax.sql.DataSource"
+		username="saps"
+		password="sapsproject"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+		url="jdbc:mysql://spasdb.cuyettjdanb5.ap-northeast-2.rds.amazonaws.com:3306/JSP?serverTimezone=UTC"
+		maxActive="500"
+	/>
+</Context>
