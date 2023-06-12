@@ -36,7 +36,8 @@ public class CardCreateServlet extends HttpServlet {
         String encType = "utf-8";				//변환형식
         int maxSize=10*1024*1024;				//사진의 size
         
-        //파일업로드를 직접적으로 담당   		
+        //파일업로드를 직접적으로 담당 
+        System.out.print(saveFolder);
         MultipartRequest multi = new MultipartRequest(request,saveFolder,maxSize,encType,new DefaultFileRenamePolicy());
  
         //form이 encType = "multipart/form-data"으로 보내기 때문에 request가 아닌 multi로 받는다

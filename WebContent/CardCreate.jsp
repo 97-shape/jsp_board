@@ -11,7 +11,7 @@
 </head>
 <body>
 	<%@ include file="./templates/header.jsp" %>
-	<%@ include file="./templates/footer.jsp" %>
+	
 	<form action="CardCreateServlet" encType = "multipart/form-data" method="post" class="mb-3" style="max-width: 540px; margin: auto;">
 		<div id="card" class="card mb-3">
 		  <div class="row g-0">
@@ -56,7 +56,7 @@
     		<input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="작성">
     	</div>
 	</form>
-	
+	<%@ include file="./templates/footer.jsp" %>
 <script>
 	
 	//비밀글 체크 시 활성화 및 필수 입력 처리

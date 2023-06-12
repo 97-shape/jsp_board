@@ -39,6 +39,7 @@
 		CardBean card = null;
 		CardDAO cardDAO = new CardDAO();
 		String cardNo = request.getParameter("cardNo");
+		int card_authority = (Integer)session.getAttribute("card_authority");
 		if (cardNo != null){
 			card = cardDAO.cardView(Integer.parseInt(cardNo));
 		}
@@ -47,22 +48,21 @@
   </head>
   <body>
     <%@ include file="./templates/header.jsp" %>
-	<%@ include file="./templates/footer.jsp" %>
-	<div style="max-width: 540px; margin: 4rem auto;">
-		<% if (card == null) { %>
+	<div style="width: 470px; margin: 4rem auto;">
+		<% if (card == null || card_authority != Integer.parseInt(cardNo)) { %>
 			<div style="text-align: center">
 				<h1>잘못된 접근입니다.</h1>
 			</div>
 		<%}else {%>
-		<div id="card" class="card mb-3" style="max-width: 540px; margin: auto;">
+		<div id="card" class="card mb-3" style="width: 470px; height: 270px; margin: auto;">
 		  <div class="row g-0">
-		    <div class="col-md-4 d-flex align-items-center">
-		      <img src="Media/card/<%=card.getImage() %>" class="img-thumbnail rounded-start ms-2" alt="...">
+		    <div class="col-md-4 d-flex align-items-center" style="height:270px">
+		      <img src="Media/card/<%=card.getImage() %>" class="img-thumbnail rounded-start ms-3" style="width: 180px; height: 240px;" alt="...">
 		    </div>
 		    <div class="col-md-8">
-		      <div class="card-body ms-3">
+		      <div class="card-body ms-5">
 		      	<p class="card-text"><small class="text-body-secondary"><%=card.getRole()%></small></p>
-		        <h5 class="card-title"><%=card.getName() %></h5>
+		        <h5 class="card-title mb-3"><%=card.getName() %></h5>
 		        <p class="card-text"><i class="fa-solid fa-mobile"></i><%=card.getPhone() %></p>
 		        <p class="card-text"><i class="fa-solid fa-phone"></i><%=card.getCompany_number() %></p>
 		        <p class="card-text"><i class="fa-solid fa-envelope"></i><%=card.getEmail() %></p>
@@ -73,8 +73,11 @@
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary float-end" onclick="downloadAsImage()">다운로드</button> <!-- 명함 다운로드 버튼 -->
+			<button type="button" class="btn btn-danger float-end me-2" onclick="">삭제</button> <!-- 명함 다운로드 버튼 -->
+			<button type="button" class="btn btn-secondary float-end me-2" onclick="">수정</button> <!-- 명함 다운로드 버튼 -->
 		</div>
 		<% } %>
       </div>
+      <%@ include file="./templates/footer.jsp" %>
   </body>
 </html>

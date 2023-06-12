@@ -14,7 +14,7 @@ public class CardDAO {
 	private ResultSet rs; // db 결과를 담는 객체
 	
 	public CardDAO() {}
-	
+	// CREATE
 	public int cardCreate(CardBean cardBean) {
 		String sql = "INSERT INTO card (name, role, phone, email, company_number, company_address, image, userID, password)"
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -45,7 +45,7 @@ public class CardDAO {
 		}
 		return -2; //DB 오류 
 	}
-	
+	// DB LIST
 	public ArrayList<CardBean> cardListGet (int start, int end){
 		String sql="select * from card order by cardNo desc limit ?,?";
 		ArrayList<CardBean> cardList = new ArrayList<CardBean>();
@@ -69,6 +69,7 @@ public class CardDAO {
 				card.setCompany_address(rs.getString("company_address"));
 				card.setImage(rs.getString("image"));
 				card.setUserID(rs.getString("userID"));
+				card.setPassword(rs.getString("password"));
 				
 				cardList.add(card);
 				
@@ -82,7 +83,7 @@ public class CardDAO {
 		}
 		return cardList;
 	}
-	
+	// VIEW
 	public CardBean cardView (int cardNo) {
 		String sql="select * from card where cardNo=?";
 		CardBean card = null;
@@ -104,6 +105,7 @@ public class CardDAO {
 				card.setCompany_address(rs.getString("company_address"));
 				card.setImage(rs.getString("image"));
 				card.setUserID(rs.getString("userID"));
+				card.setPassword(rs.getString("password"));
 			}
 		}catch (Exception ex){
 			ex.printStackTrace();
@@ -113,5 +115,29 @@ public class CardDAO {
 			JdbcMySQLUtil.close(conn);
 		}
 		return card;
+	}
+	
+	// PASSWORD CHECK
+	public String cardPasswordCheck(int cardNo) {
+		String sql="select password from card where cardNo=?";
+		String password = null;
+		
+		try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cardNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				password = rs.getString("password");
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}finally {
+			JdbcMySQLUtil.close(rs);
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return password;
 	}
 }

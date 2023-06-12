@@ -48,7 +48,6 @@
 <body>
 	<%-- include를 이용한 header및 footer 가져오기 --%>
 	<%@ include file="./templates/header.jsp" %>
-	<%@ include file="./templates/footer.jsp" %>
 	<div style="max-width: 720px; margin: 4rem auto; text-align: center">
 		<h1>게시판 목록</h1>
 		<% if (count == 0) { %>
@@ -116,6 +115,7 @@
 			}
 		%>
 		</ul>
-	 </div>	
+	 </div>
+	 <%@ include file="./templates/footer.jsp" %>	
 </body>
 </html>

@@ -49,25 +49,26 @@
 <body>
 	<%-- include를 이용한 header및 footer 가져오기 --%>
 	<%@ include file="./templates/header.jsp" %>
-	<%@ include file="./templates/footer.jsp" %>
-	<div style="max-width: 720px; margin: 4rem auto;">
+	
+	<div style="max-width: 800px; margin: 4rem auto;">
 		<h1 style="text-align: center">게시판 목록</h1>
-			<select class="form-select" aria-label="Default select example">
-			  <option value="name" selected>이름</option>
-			  <option value="role">직책</option>
-			  <option value="">Two</option>
-			  <option value="3">Three</option>
-			</select>
-            <% for (CardBean card : cardList) { %>
-	            <div id="card" class="card mb-3" style="max-width: 540px; margin: auto; cursor:pointer" onclick="redirectToPage('<%=card.getCardNo() %>')">
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" placeholder="이름으로 검색" name="nameInput" id="nameInput">
+			<button class="btn btn-outline-secondary" type="button" id="nameSearch">검색</button>
+		</div>
+		<div class="row row-cols-1 row-cols-md-2">
+           <% for (CardBean card : cardList) { %>
+           <% if (card.getPassword() == null) {%>
+            <div class="col">
+	            <div id="card" class="card mb-3" style="width: 376px; height: 216px; margin: auto; cursor:pointer" onclick="redirectToPage('<%=card.getCardNo() %>')">
 				  <div class="row g-0">
-				    <div class="col-md-4 d-flex align-items-center">
-				      <img src="Media/card/<%=card.getImage() %>" class="img-thumbnail rounded-start ms-2" style="max-height:200px;" alt="...">
+				    <div class="col-md-4 d-flex align-items-center" style="height:216px">
+				      <img src="Media/card/<%=card.getImage() %>" class="img-thumbnail rounded-start ms-3" style="width: 150px; height: 200px;" alt="...">
 				    </div>
 				    <div class="col-md-8">
-				      <div class="card-body ms-3">
+				      <div class="card-body ms-5">
 				      	<p class="card-text"><small class="text-body-secondary"><%=card.getRole()%></small></p>
-				        <h5 class="card-title"><%=card.getName() %></h5>
+				        <h5 class="card-title mb-3"><%=card.getName() %></h5>
 				        <p class="card-text"><i class="fa-solid fa-mobile"></i><%=card.getPhone() %></p>
 				        <p class="card-text"><i class="fa-solid fa-phone"></i><%=card.getCompany_number() %></p>
 				        <p class="card-text"><i class="fa-solid fa-envelope"></i><%=card.getEmail() %></p>
@@ -76,19 +77,35 @@
 				    </div>
 				  </div>
 				</div>
-	        <% } %>
-	        <%
-	        	//로그인 여부 파악 후 명함 생성 가능하게
-		        boolean isLoggedIn = (session != null && session.getAttribute("userID") != null);
-	        	if (isLoggedIn) {
-	        %>
-	        	<button type="button" class="btn btn-primary float-end" onclick="downloadAsImage()">등록하기</button>
-	        <%} %>
+			</div>
+			<%} else  {%>
+			<div class="col" style="cursor:pointer" onclick="redirectToSecreatPage('<%=card.getCardNo() %>')">
+	           <div id="card" class="card d-flex justify-content-center align-items-center mb-3" style="width: 376px; height: 216px; margin: auto;">
+		      	<h4 class="">비공개</h4>
+		      </div>
+				  </div>
+				</div>
+			</div>	
+			<% } %>
+        	<% } %>
+        </div>
+        <%
+        	//로그인 여부 파악 후 명함 생성 가능하게
+	        boolean isLoggedIn = (session != null && session.getAttribute("userID") != null);
+        	if (isLoggedIn) {
+        %>
+        	<button type="button" class="btn btn-primary float-end" onclick="location.href='CardCreate.jsp'">등록하기</button>
+        <%} %>
 	 </div>
-	 
+	 <%@ include file="./templates/footer.jsp" %>
 	 <script>
 	    function redirectToPage(cardNo) {
 	        var url = "CardView.jsp?cardNo=" + cardNo;
+	        window.location.href = url;
+	    }
+	    
+	    function redirectToSecreatPage(cardNo) {
+	        var url = "PasswordCheck.jsp?cardNo=" + cardNo;
 	        window.location.href = url;
 	    }
 	</script>	
