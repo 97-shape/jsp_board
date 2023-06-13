@@ -80,6 +80,29 @@ public class CardDAO {
 		}
 		return -2; //DB 오류 
 	}
+	// DB DELETE
+	public int cardDelete(int cardNo) {
+		String sql = "DELETE FROM card WHERE cardNo = ?";
+		 try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cardNo);
+			System.out.print(pstmt);
+	
+			int result = pstmt.executeUpdate();
+			conn.commit();
+	        return result;
+	        	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return -2; //DB 오류 
+	}
 	
 	// DB LIST
 	public ArrayList<CardBean> cardListGet (int start, int end){
