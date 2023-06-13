@@ -39,9 +39,19 @@
 		CardBean card = null;
 		CardDAO cardDAO = new CardDAO();
 		String cardNo = request.getParameter("cardNo");
-		int card_authority = (Integer)session.getAttribute("card_authority");
-		if (cardNo != null){
+		int card_authority = 0;
+		// 비밀글인가? 암호가 일치하는가?를 확인
+		try {
 			card = cardDAO.cardView(Integer.parseInt(cardNo));
+			if (card.getPassword() != null){
+				card_authority = (Integer)session.getAttribute("card_authority");
+				session.removeAttribute("card_authority");
+			}
+			else{
+				card_authority = Integer.parseInt(cardNo);
+			}
+		}catch(Exception ex){
+			
 		}
 	%>
     
