@@ -48,9 +48,9 @@
 		<div class="input-group mb-3" style="max-width: 540px; margin: auto;">
 			<label class="input-group-text" for="passwordCheckInput">비밀글</label>
 		  	<div class="input-group-text">
-		    	<input class="form-check-input mt-0" type="checkbox" name="password" id="passwordCheckInput" onclick="togglePasswordInput()" value="">
+		    	<input class="form-check-input mt-0" type="checkbox" id="passwordCheckInput" onclick="togglePasswordInput()" value="">
 		  	</div>
-		  	<input type="password" class="form-control" id="passwordInput" disabled>
+		  	<input type="password" class="form-control" name="password" id="passwordInput" disabled>
 		</div>
 		<div class="text-center">
     		<input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="작성">

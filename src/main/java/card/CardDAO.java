@@ -45,6 +45,42 @@ public class CardDAO {
 		}
 		return -2; //DB 오류 
 	}
+	
+	// DB UPDATE
+	public int cardUpdate(CardBean cardBean) {
+		String sql = "update card set name=?, role=?, phone=?, email=?, company_number=?, company_address=?, image=?, userID=?, password=?"
+				+ " where cardNo=?";
+        try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cardBean.getName());
+			pstmt.setString(2, cardBean.getRole());
+			pstmt.setString(3, cardBean.getPhone());
+			pstmt.setString(4, cardBean.getEmail());
+			pstmt.setString(5, cardBean.getCompany_number());
+			pstmt.setString(6, cardBean.getCompany_address());
+			pstmt.setString(7, cardBean.getImage());
+			pstmt.setString(8, cardBean.getUserID());
+			pstmt.setString(9, cardBean.getPassword());
+			pstmt.setInt(10, cardBean.getCardNo());
+			
+			System.out.print(pstmt);
+
+			int result = pstmt.executeUpdate();
+			conn.commit();
+            return result;
+            	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return -2; //DB 오류 
+	}
+	
 	// DB LIST
 	public ArrayList<CardBean> cardListGet (int start, int end){
 		String sql="select * from card order by cardNo desc limit ?,?";

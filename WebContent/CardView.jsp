@@ -83,8 +83,11 @@
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary float-end" onclick="downloadAsImage()">다운로드</button> <!-- 명함 다운로드 버튼 -->
-			<button type="button" class="btn btn-danger float-end me-2" onclick="">삭제</button> <!-- 명함 다운로드 버튼 -->
-			<button type="button" class="btn btn-secondary float-end me-2" onclick="">수정</button> <!-- 명함 다운로드 버튼 -->
+			<button type="button" class="btn btn-danger float-end me-2" onclick="">삭제</button>
+			<form id="updateForm" action="CardUpdate.jsp" method="post">
+			  	<input type="hidden" name="cardNo" value="<%=cardNo%>">
+			  	<button type="submit" class="btn btn-secondary float-end me-2">수정</button>
+			</form>
 		</div>
 		<% } %>
       </div>
