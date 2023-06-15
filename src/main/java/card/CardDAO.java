@@ -88,7 +88,6 @@ public class CardDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, cardNo);
-			System.out.print(pstmt);
 	
 			int result = pstmt.executeUpdate();
 			conn.commit();
@@ -105,7 +104,7 @@ public class CardDAO {
 	}
 	
 	// DB LIST
-	public ArrayList<CardBean> cardListGet (int start, int end){
+	public ArrayList<CardBean> cardListGet (int start, int amount){
 		String sql="select * from card order by cardNo desc limit ?,?";
 		ArrayList<CardBean> cardList = new ArrayList<CardBean>();
 		CardBean card = null;
@@ -114,7 +113,7 @@ public class CardDAO {
 			conn = JdbcMySQLUtil.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setInt(2, amount);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -142,6 +141,70 @@ public class CardDAO {
 		}
 		return cardList;
 	}
+	
+	// DB FILTER LIST
+		public ArrayList<CardBean> cardFilterListGet (int start, int amount, String name){
+			String sql="select * from card order by cardNo where name=? desc limit ?,?";
+			ArrayList<CardBean> cardList = new ArrayList<CardBean>();
+			CardBean card = null;
+			
+			try {
+				conn = JdbcMySQLUtil.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, amount);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					card = new CardBean();
+					card.setCardNo(rs.getInt("cardNo"));
+					card.setName(rs.getString("name"));
+					card.setRole(rs.getString("role"));
+					card.setPhone(rs.getString("phone"));
+					card.setEmail(rs.getString("email"));
+					card.setCompany_number(rs.getString("company_number"));
+					card.setCompany_address(rs.getString("company_address"));
+					card.setImage(rs.getString("image"));
+					card.setUserID(rs.getString("userID"));
+					card.setPassword(rs.getString("password"));
+					
+					cardList.add(card);
+					
+				}
+			}catch (Exception ex){
+				ex.printStackTrace();
+			}finally {
+				JdbcMySQLUtil.close(rs);
+				JdbcMySQLUtil.close(pstmt);
+				JdbcMySQLUtil.close(conn);
+			}
+			return cardList;
+		}
+	
+	public int cardTotalCount() {
+		String sql="select count(*) from card";
+		int count = 0;
+		
+		try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+		
+			
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}finally {
+			JdbcMySQLUtil.close(rs);
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return count;
+	}
+	
 	// VIEW
 	public CardBean cardView (int cardNo) {
 		String sql="select * from card where cardNo=?";
