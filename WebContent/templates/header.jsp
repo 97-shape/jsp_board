@@ -25,6 +25,7 @@
 				<button onclick="location.href='Join.jsp'" type="button" class="btn btn-outline-primary">회원가입</button>
 			<% }else { %>
 				<span class="me-2"><%=(String)session.getAttribute("userName") + "님 로그인 중"%></span>
+				<button onclick="location.href='MyPage.jsp'" type="button" class="btn btn-secondary">마이 페이지</button>
 				<button onclick="location.href='Logout.jsp'" type="button" class="btn btn-danger">로그아웃</button>
 			<% } %>
 		</div>

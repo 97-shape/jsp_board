@@ -12,7 +12,7 @@
 	
 	<link href="css/cardView.css" rel="stylesheet" type="text/css">
 	
-	<title>명함</title>
+	<title>Practice</title>
 	
 	<!-- 파일 다운로드 파일 -->
 	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -83,14 +83,16 @@
 		</div>
 		<div>
 			<button type="button" class="btn btn-primary float-end" onclick="downloadAsImage()">다운로드</button> <!-- 명함 다운로드 버튼 -->
-			<form id="updateForm" action="CardDeleteServlet" method="post">
-			  	<input type="hidden" name="cardNo" value="<%=cardNo%>">
-			  	<button type="submit" class="btn btn-secondary float-end me-2">삭제</button>
-			</form>
-			<form id="updateForm" action="CardUpdate.jsp" method="post">
-			  	<input type="hidden" name="cardNo" value="<%=cardNo%>">
-			  	<button type="submit" class="btn btn-secondary float-end me-2">수정</button>
-			</form>
+			<%if (card.getUserID().equals(session.getAttribute("userID"))) {%>
+				<form id="updateForm" action="CardDeleteServlet" method="post">
+				  	<input type="hidden" name="cardNo" value="<%=cardNo%>">
+				  	<button type="submit" class="btn btn-danger float-end me-2">삭제</button>
+				</form>
+				<form id="updateForm" action="CardUpdate.jsp" method="post">
+				  	<input type="hidden" name="cardNo" value="<%=cardNo%>">
+				  	<button type="submit" class="btn btn-secondary float-end me-2">수정</button>
+				</form>
+			<%} %>
 		</div>
 		<% } %>
       </div>

@@ -63,7 +63,9 @@ public class CardUpdateServlet extends HttpServlet {
         
         int result = cardDao.cardUpdate(cardBean);
         if (result == 1) {
-        	response.sendRedirect("CardList.jsp"); // 적절한 완료 페이지 경로로 변경해주세요
+        	response.sendRedirect("CardList.jsp");
+        }else {
+        	response.sendRedirect("CardList.jsp");
         }
 	}
 

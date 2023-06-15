@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Practice</title>
 </head>
 <body>
 	<%-- include를 이용한 header및 footer 가져오기 --%>

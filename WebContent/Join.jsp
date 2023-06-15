@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Practice</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <style>
 		html, body {
@@ -27,7 +27,7 @@
 			<% if ("id".equals(request.getParameter("joinFailed"))) { %>
 				<div class="alert alert-danger" role="alert">
 				    이미 생성된 id 입니다.
-				</div>
+				</div>	
 			<% } else if ("password".equals(request.getParameter("joinFailed"))) { %>
 				<div class="alert alert-danger" role="alert">
 				    비밀번호와 비밀번호 확인이 같지 않습니다.

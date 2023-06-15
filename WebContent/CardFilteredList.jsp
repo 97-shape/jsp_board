@@ -7,15 +7,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%!
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-%>
-    
 <%
-
+	request.setCharacterEncoding("UTF-8");
 	String name = request.getParameter("name");
 	String pageStr = request.getParameter("page");
 	String pageSizeStr = request.getParameter("size");
+	
+	if (name == null) {
+		response.sendRedirect("CardList.jsp");
+	}
 	
 	if (pageStr == null) {
 		pageStr = "1";
@@ -35,34 +35,34 @@
 	// BoardDAO 인스턴스 생성
 	CardDAO cardDAO = new CardDAO();
 	
-	cardList = cardDAO.cardListGet(start, pageSize);
-	int loadSize = cardDAO.cardTotalCount();
+	cardList = cardDAO.cardFilterListGet(start, pageSize, name);
+	int loadSize = cardDAO.cardFilterTotalCount(name);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Practice</title>
+<title>Pratice</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/23268a4293.js" crossorigin="anonymous"></script>
 <style>
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.pagination {
-  display: inline-flex;
-}
-
-.pagination .page-item:first-child .page-link {
-  margin-left: 0;
-}
-
-.pagination .page-item:last-child .page-link {
-  margin-right: 0;
-}
+	.pagination-container {
+	  display: flex;
+	  justify-content: center;
+	  margin-top: 2rem;
+	}
+	
+	.pagination {
+	  display: inline-flex;
+	}
+	
+	.pagination .page-item:first-child .page-link {
+	  margin-left: 0;
+	}
+	
+	.pagination .page-item:last-child .page-link {
+	  margin-right: 0;
+	}
 </style>
 <link href="css/cardView.css" rel="stylesheet" type="text/css">
 </head>
@@ -74,7 +74,7 @@
 		<h1 style="text-align: center">명함 목록</h1>
 		<form action="CardFilteredList.jsp" method="post">
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" placeholder="이름으로 검색" name="name" id="nameInput">
+				<input type="text" class="form-control" placeholder="이름으로 검색" name="name" id="nameInput" value="<%=name%>">
 				<button class="btn btn-outline-secondary" type="submit" id="nameSearch">검색</button>
 			</div>
 		</form>
@@ -107,7 +107,7 @@
 		      	</div>
 			</div>
 			<% } %>
-			<% } %>
+		<% } %>
 		</div>	
     <%
     	//로그인 여부 파악 후 명함 생성 가능하게
