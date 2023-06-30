@@ -7,10 +7,11 @@ public class BoardBean{
 	private String password;
 	private String content;
 	private String writeDate;
+	private String src;
 	private int readCount;
 	private int ref;  // 원글
-    private int re_step; // 답글 단계
-    private int re_level; // 답글 순서
+    private int ref_step; // 답글 단계
+    private int ref_level; // 답글 순서
 	public int getNo() {
 		return no;
 	}
@@ -59,24 +60,29 @@ public class BoardBean{
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
-	public int getRe_step() {
-		return re_step;
+	public int getRef_step() {
+		return ref_step;
 	}
-	public void setRe_step(int re_step) {
-		this.re_step = re_step;
+	public void setRef_step(int ref_step) {
+		this.ref_step = ref_step;
 	}
-	public int getRe_level() {
-		return re_level;
+	public int getRef_level() {
+		return ref_level;
 	}
-	public void setRe_level(int re_level) {
-		this.re_level = re_level;
+	public void setRef_level(int ref_level) {
+		this.ref_level = ref_level;
+	}
+	public String getSrc() {
+		return src;
+	}
+	public void setSrc(String src) {
+		this.src = src;
 	}
 	
-	public BoardBean() {
-		super();
-	}
+	public BoardBean() {}
 	
-	public BoardBean(int no, String title, String id, String password, String content, String writeDate, int readCount) {
+	public BoardBean(int no, String title, String id, String password, String content, String writeDate, String src, int readCount,
+			int ref, int ref_step, int ref_level) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -85,7 +91,11 @@ public class BoardBean{
 		this.content = content;
 		this.writeDate = writeDate;
 		this.readCount = readCount;
+		this.ref = ref;
+		this.ref_step = ref_step;
+		this.ref_level = ref_level;
+		this.src = src;
 	}
     
-	
+    
 }

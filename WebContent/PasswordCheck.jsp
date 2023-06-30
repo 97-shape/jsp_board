@@ -10,7 +10,7 @@
 <% 
 	request.setCharacterEncoding("UTF-8"); // 글자 깨짐 방지
 	String cardNo = request.getParameter("cardNo");
-	String boardNo = request.getParameter("type");
+	String boardNo = request.getParameter("boardNo");
 	String type="";
 	String no="";
 	if (cardNo != null){
@@ -22,7 +22,7 @@
 		no = boardNo;
 	}
 	else
-		response.sendRedirect("List.jsp");
+		response.sendRedirect("Main.jsp");
 %>
 <%@ include file="./templates/header.jsp" %>
 	<div style="width: 470px; margin: 4rem auto; text-align: center;">

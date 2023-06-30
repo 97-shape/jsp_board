@@ -1,12 +1,16 @@
+<%@page import="encrypter.EncryptPassword"%>
 <%@ page import="user.UserDAO" %>
 
 <%
+EncryptPassword encryptPw = new EncryptPassword();
+
 request.setCharacterEncoding("UTF-8"); // 글자 깨짐 방지
 String userID = request.getParameter("id");
 String userPassword = request.getParameter("pw");
+String encrypteUserPassword = encryptPw.encryptPassword(userPassword);
 
 UserDAO userDAO = new UserDAO();
-int loginResult = userDAO.login(userID, userPassword);
+int loginResult = userDAO.login(userID, encrypteUserPassword);
 
 if (loginResult == 1) {
     // 로그인 성공

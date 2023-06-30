@@ -102,7 +102,7 @@
 			</div>
 			<%} else  {%>
 			<div class="col">
-	           	<div id="card" class="card d-flex justify-content-center align-items-center mb-3" style="width: 376px; height: 216px; margin: auto; cursor:pointer" onclick="redirectToSecreatPage('<%=card.getCardNo() %>')" >
+	           	<div id="card" class="card d-flex justify-content-center align-items-center mb-3" style="width: 376px; height: 216px; margin: auto; cursor:pointer" onclick="redirectToSecretPage('<%=card.getCardNo() %>')" >
 		      		<h4 class=""><%=card.getName() %>님의 비공개 명함</h4>
 		      	</div>
 			</div>
@@ -164,7 +164,7 @@
 	        window.location.href = url;
 	    }
 	    
-	    function redirectToSecreatPage(cardNo) {
+	    function redirectToSecretPage(cardNo) {
 	        var url = "PasswordCheck.jsp?cardNo=" + cardNo;
 	        window.location.href = url;
 	    }

@@ -44,6 +44,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/23268a4293.js" crossorigin="anonymous"></script>
 </head>
 <body>
 	<%-- include를 이용한 header및 footer 가져오기 --%>
@@ -59,24 +60,44 @@
 				</tr>
 			</table>
 		<% } else {%>
-	    <table>
+	    <table class="table table-hover">
 	        <thead>
 	            <tr>
 	                <th>제목</th>
 	                <th>작성자</th>
+	                <th>작성일</th>
+	                <th>조회수</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	            <% for (BoardBean board : boardList) { %>
-		        <tr>
+	            <% int re = (board.getRef_step() == 0) ? 0 : 1; %>
+	            <% if (board.getPassword() == null) {%>
+		        <tr onclick="redirectToPage('<%=board.getNo() %>')">
+		            <td class="text-start" style="text-indent: <%=board.getRef_step() * 10 %>px;"><%= "ㄴre ".repeat(re) %><%= board.getTitle() %></td>
 		            <td><%= board.getId() %></td>
-		            <td><%= board.getTitle() %></td>
-		            <!-- 필요한 열들 추가 -->
+		            <td><%= board.getWriteDate() %></td>
+		            <td><%= board.getReadCount() %></td>
 		        </tr>
+		        <%}else{ %>
+	        	<tr onclick="redirectToSecretPage('<%=board.getNo() %>')">
+		            <td class="text-start" style="text-indent: <%=board.getRef_step() * 10 %>px;"><%= "ㄴre ".repeat(re) %><%=board.getRef_step()%><%= board.getTitle() %><i class="fa-solid fa-lock" style="color: #000000;"></i></td>
+		            <td><%= board.getId() %></td>
+		            <td><%= board.getWriteDate() %></td>
+		            <td><%= board.getReadCount() %></td>
+		        </tr>
+		        <% } %>
 		        <% } %>
 	        </tbody>
 	    </table>
 	    <% } %>
+	    <%
+    	//로그인 여부 파악 후 명함 생성 가능하게
+     	boolean isLoggedIn = (session != null && session.getAttribute("userID") != null);
+    	if (isLoggedIn) {
+	    %>
+	    	<button type="button" class="btn btn-primary float-end" onclick="location.href='BoardCreate.jsp'">등록하기</button>
+	    <%} %>
 	    <ul class="pagination" style="justify-content: center;">
 		<%
 			if (count > 0) {
@@ -116,6 +137,17 @@
 		%>
 		</ul>
 	 </div>
-	 <%@ include file="./templates/footer.jsp" %>	
+	 <%@ include file="./templates/footer.jsp" %>
+	 <script>
+	    function redirectToPage(boardNo) {
+	        var url = "BoardView.jsp?boardNo=" + boardNo;
+	        window.location.href = url;
+	    }
+	    
+	    function redirectToSecretPage(boardNo) {
+	        var url = "PasswordCheck.jsp?boardNo=" + boardNo;
+	        window.location.href = url;
+	    }
+	</script>	
 </body>
 </html>

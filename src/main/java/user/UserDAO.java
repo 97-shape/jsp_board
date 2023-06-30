@@ -86,6 +86,29 @@ public class UserDAO {
 		return -2; // error
 	}
 	
+	public int update(UserBean user) {
+		String SQL = "UPDATE user SET userPassword=?, userName=? WHERE userID=?";
+		try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUserPassword());
+			pstmt.setString(2, user.getUserName());
+			pstmt.setString(3, user.getUserID());
+			
+			if(pstmt.executeUpdate() == 1) {
+				conn.commit();
+				return 1;
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JdbcMySQLUtil.close(rs);
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return -2; // error
+	}
+	
 	// 중복 검사
 	public int isUniqueId(String id) {
 		String SQL = "SELECT userID FROM user WHERE userID = ?";
@@ -110,4 +133,5 @@ public class UserDAO {
 		}
 		return -2; //DB 오류 
 	}
+	
 }
