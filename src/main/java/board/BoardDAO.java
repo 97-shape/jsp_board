@@ -207,7 +207,7 @@ public class BoardDAO {
 		
 			
 			if (rs.next()) {
-				ref = rs.getInt(1);
+				ref = rs.getInt(1)+1;
 			}
 		}catch (Exception ex){
 			ex.printStackTrace();
@@ -217,6 +217,30 @@ public class BoardDAO {
 			JdbcMySQLUtil.close(conn);
 		}
 		return ref;
+	}
+	
+	public int boardRef_level(int ref, int ref_step) {
+		String sql="select max(ref_level) from board where ref = ? and ref_step = ?";
+		int result = 0;
+		
+		try {
+			conn = JdbcMySQLUtil.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ref);
+			pstmt.setInt(2, ref_step);
+			rs = pstmt.executeQuery();
+		
+			if (rs.next()) {
+				result = rs.getInt(1)+1;
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+		}finally {
+			JdbcMySQLUtil.close(rs);
+			JdbcMySQLUtil.close(pstmt);
+			JdbcMySQLUtil.close(conn);
+		}
+		return result;
 	}
 	
 	public void boardReadCount(int boardNo) {

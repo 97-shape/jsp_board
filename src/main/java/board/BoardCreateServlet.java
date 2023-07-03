@@ -34,10 +34,7 @@ public class BoardCreateServlet extends HttpServlet {
         long timeInMillis = System.currentTimeMillis();
         Date timeInDate = new Date(timeInMillis);
         String timeInFormat = inputFormat.format(timeInDate);
-
-
         
-        int ref = boardDao.boardRef(); 
         
         //File
         String saveFolder = request.getSession().getServletContext().getRealPath("/") + "Media/board/";
@@ -45,6 +42,24 @@ public class BoardCreateServlet extends HttpServlet {
         int maxSize=10*1024*1024;	
         
         MultipartRequest multi = new MultipartRequest(request,saveFolder,maxSize,encType,new DefaultFileRenamePolicy());
+        
+        int ref; int ref_level; int ref_step;
+        if (multi.getParameter("ref") == null) {
+        	ref = boardDao.boardRef();
+        }else {
+        	ref = Integer.parseInt(multi.getParameter("ref"));
+        }
+        if (multi.getParameter("ref_step") == null) {
+        	ref_step = 0;
+        }else {
+        	ref_step = Integer.parseInt(multi.getParameter("ref_step"))+1;
+        }
+        if (multi.getParameter("ref_level") == null) {
+        	ref_level = 0;
+        }else {
+        	ref_level = boardDao.boardRef_level(ref, ref_step);
+        }
+        
 
         BoardBean boardBean = new BoardBean();
         
@@ -55,9 +70,9 @@ public class BoardCreateServlet extends HttpServlet {
         boardBean.setSrc(multi.getFilesystemName("file"));
         boardBean.setWriteDate(timeInFormat);
         boardBean.setReadCount(0);
-        boardBean.setRef(ref+1);
-        boardBean.setRef_level(0);
-        boardBean.setRef_step(0);
+        boardBean.setRef(ref);
+        boardBean.setRef_level(ref_level);
+        boardBean.setRef_step(ref_step);
         
         int res = boardDao.boardCreate(boardBean);
         if (res == 1) {

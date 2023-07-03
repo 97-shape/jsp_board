@@ -70,6 +70,14 @@
 				  	<input type="hidden" name="boardNo" value="<%= boardNo %>">
 				  	<button type="submit" class="btn btn-secondary float-end me-2">수정</button>
 				</form>
+			<%} else if (session.getAttribute("userID") != null){%>
+				<form action="BoardCreate.jsp" method="post">
+				  	<input type="hidden" name="boardNo" value="<%= boardNo %>">
+				  	<input type="hidden" name="ref" value="<%= board.getRef() %>">
+				  	<input type="hidden" name="ref_level" value="<%= board.getRef_level() %>">
+				  	<input type="hidden" name="ref_step" value="<%= board.getRef_step() %>">
+				  	<button type="submit" class="btn btn-secondary float-end me-2">답글</button>
+				</form>
 			<%} %>
 		</div>
 		<% } %>

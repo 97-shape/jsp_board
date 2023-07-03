@@ -11,6 +11,11 @@
 <body>
 	<%@ include file="./templates/header.jsp" %>
 	
+	<%
+		request.setCharacterEncoding("UTF-8");
+		session.getAttribute("userID");
+	%>
+	
 	<form action="BoardCreateServlet" encType = "multipart/form-data" method="post" class="mb-3" style="max-width: 540px; margin: auto;">
 		<div class="input-group mb-3" style="width: 100%; margin: auto;">
 			<label class="input-group-text" for="titleInput">제목</label>
@@ -31,6 +36,9 @@
 		  	</div>
 		  	<input type="password" class="form-control" name="password" id="passwordInput" disabled>
 		</div>
+		<input type="hidden" name="ref" value="<%= request.getParameter("ref") %>">
+	  	<input type="hidden" name="ref_level" value="<%= request.getParameter("ref_level") %>">
+	  	<input type="hidden" name="ref_step" value="<%= request.getParameter("ref_step") %>">
 		<div class="text-center">
     		<input type="submit" class="btn btn-dark rounded-pill col-6 mt-3" value="작성">
     	</div>
