@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import encrypter.AES256Encrypt;
+
 /**
  * Servlet implementation class BoardPasswordCheckServlet
  */
@@ -23,12 +25,16 @@ public class BoardPasswordCheckServlet extends HttpServlet {
 
 		int boardNo = Integer.parseInt(request.getParameter("no"));
 		String enteredPassword = request.getParameter("pw");
-		String correctPassword = boardDao.boardPasswordCheck(boardNo); 
+		try {
+		AES256Encrypt encrypt = new AES256Encrypt("kfZ0UkidP2W33sPrLydthyYm7WM1YnKBqDgfZDZhndQ=");
+		
+		String correctPassword = encrypt.aesDecode(boardDao.boardPasswordCheck(boardNo)); 
 		
 		if (enteredPassword.equals(correctPassword)) {
 			session.setAttribute("board_authority", boardNo);
 			response.sendRedirect("BoardView.jsp?boardNo=" + boardNo);
 		}
+		}catch(Exception ex){}
 	}
 
 }

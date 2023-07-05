@@ -81,7 +81,7 @@
 		        </tr>
 		        <%}else{ %>
 	        	<tr onclick="redirectToSecretPage('<%=board.getNo() %>')">
-		            <td class="text-start" style="text-indent: <%=board.getRef_step() * 10 %>px;"><%= "ㄴre ".repeat(re) %><%=board.getRef_step()%><%= board.getTitle() %><i class="fa-solid fa-lock" style="color: #000000;"></i></td>
+		            <td class="text-start" style="text-indent: <%=board.getRef_step() * 10 %>px;"><%= "ㄴre ".repeat(re) %><%= board.getTitle() %><i class="fa-solid fa-lock" style="color: #000000;"></i></td>
 		            <td><%= board.getId() %></td>
 		            <td><%= board.getWriteDate() %></td>
 		            <td><%= board.getReadCount() %></td>
